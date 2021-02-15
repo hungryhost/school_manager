@@ -1,0 +1,12 @@
+__pycache__
+migrations
+*.sqlite3
+.env
+/.idea/
+__pycache__/
+**/migrations/**
+**/**/migrations
+*.py[cod]
+*.log
+.log
+*.log.*
