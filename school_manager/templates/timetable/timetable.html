@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% regroup lessons by get_day_display as dates_list %}
+    {% for date in dates_list %}
+       <div class="alert alert-info" role="alert">
+                  {{ date.grouper }}
+                </div>
+        {% for lesson in date.list %}
+            <div class="card" style="margin-top: 10px; margin-bottom: 10px">
+            <div class="card-header alert-success">
+                {{lesson.lesson.lesson_interval}}
+            </div>
+                <div class="card-header">
+                {{lesson.lesson.subject}}
+                </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Преподаватель: {{lesson.lesson.teacher.full_name}}</li>
+                <li class="list-group-item">Кабинет: {{lesson.lesson.room}}</li>
+            </ul>
+
+            </div>
+
+            {% endfor %}
+   {% endfor %}
+
+{% endblock %}
+
+

@@ -19,9 +19,9 @@ class UserModelManager(BaseUserManager):
 	"""
 	use_in_migrations = True
 
-	def create_user(self, email, first_name, last_name, password=None):
-		if not email:
-			raise ValueError("User must have an email")
+	def create_user(self, username, first_name, last_name, password=None):
+		if not username:
+			raise ValueError("User must have a username")
 		if not password:
 			raise ValueError("User must have a password")
 		if not first_name:
@@ -30,7 +30,7 @@ class UserModelManager(BaseUserManager):
 			raise ValueError("User must have a last name")
 
 		user = self.model(
-			email=self.normalize_email(email),
+			username=username,
 			first_name=first_name,
 			last_name=last_name,
 		)
@@ -40,9 +40,9 @@ class UserModelManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-	def create_superuser(self, email, first_name, last_name, password=None):
-		if not email:
-			raise ValueError("User must have an email")
+	def create_superuser(self, username, first_name, last_name, password=None):
+		if not username:
+			raise ValueError("User must have a username")
 		if not password:
 			raise ValueError("User must have a password")
 		if not first_name:
@@ -51,7 +51,7 @@ class UserModelManager(BaseUserManager):
 			raise ValueError("User must have a last name")
 
 		user = self.model(
-			email=self.normalize_email(email),
+			username=username,
 			first_name=first_name,
 			last_name=last_name
 		)
@@ -63,9 +63,9 @@ class UserModelManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-	def create_staffuser(self, email, first_name, last_name, password=None):
-		if not email:
-			raise ValueError("User must have an email")
+	def create_staffuser(self, username, first_name, last_name, password=None):
+		if not username:
+			raise ValueError("User must have a username")
 		if not password:
 			raise ValueError("User must have a password")
 		if not first_name:
@@ -74,7 +74,7 @@ class UserModelManager(BaseUserManager):
 			raise ValueError("User must have a last name")
 
 		user = self.model(
-			email=self.normalize_email(email),
+			username=username,
 			first_name=first_name,
 			last_name=last_name,
 		)
@@ -99,8 +99,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		('F', 'Female'),
 		('', 'Not Set'),
 	]
-	email = models.EmailField('email', null=False, blank=False, max_length=64,
-		unique=True, db_index=True)
+	username = models.CharField('username', max_length=255, null=False, blank=False, unique=True, db_index=True)
+	email = models.EmailField('email', null=True, blank=True, max_length=64,
+		unique=True)
 	first_name = models.CharField('first_name', null=False, blank=False, max_length=50)
 	last_name = models.CharField('last_name', null=False, blank=False, max_length=50)
 
@@ -120,7 +121,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=False)
 
 	EMAIL_FIELD = 'email'
-	USERNAME_FIELD = 'email'
+	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = ['first_name', 'last_name']
 
 	objects = UserModelManager()
@@ -147,5 +148,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		return self.is_admin
 
 	def __str__(self):
-		return "{}".format(self.email)
+		return "{}".format(self.username)
 

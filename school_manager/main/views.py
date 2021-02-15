@@ -4,4 +4,10 @@ from django.http import HttpResponse
 
 
 def home(request):
-	return render(request, 'mainPage/home.html')
+	if request.user.is_authenticated:
+		if request.user.is_confirmed:
+			return render(request, 'mainPage/home.html')
+		else:
+			return render(request, 'mainPage/home_unconfirmed.html')
+	else:
+		return render(request, 'mainPage/home.html')

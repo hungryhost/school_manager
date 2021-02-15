@@ -13,40 +13,49 @@
     <link rel="stylesheet" type="text/css" href="{% static "main.css" %}">
 
     {% if title %}
-        <title>LockAndRent - {{ title }}</title>
+        <title>School Manager - {{ title }}</title>
     {% else %}
-        <title>LockAndRent</title>
+        <title>School Manager</title>
     {% endif %}
 </head>
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'lr-main' %}">LockAndRent</a>
+          <a class="navbar-brand mr-4" href="{% url 'main-main' %}">Моя Школа</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'lr-main' %}">Главная</a>
-              <a class="nav-item nav-link" href="#">HelpDesk</a>
+              <a class="nav-item nav-link" href="{% url 'main-main' %}">Главная</a>
+                 {% if user.is_authenticated and user.is_confirmed%}
+                      <a class="nav-item nav-link" href="#">HelpDesk</a>
+                <a class="nav-item nav-link" href="#">Расписание</a>
+                 {% endif %}
+                {% if user.is_staff and user.is_confirmed%}
+                <a class="nav-item nav-link" href="#">Управление школой</a>
+                {% endif %}
+
 
              </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Login</a>
-              <a class="nav-item nav-link" href="#">Register</a>
+                 {% if user.is_authenticated %}
+                 <a class="nav-item nav-link" href="{% url 'logout' %}">Выйти</a>
+                     {%else%}
+                     <a class="nav-item nav-link" href="{% url 'login' %}">Войти</a>
+                 {% endif %}
+
             </div>
           </div>
         </div>
       </nav>
     </header>
     <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
           {% block content %}{% endblock %}
         </div>
-      </div>
     </main>
 
 
@@ -59,7 +68,7 @@
 <!-- Footer -->
 <footer class="page-footer font-small blue">
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2021 LockAndRent Internal Systems Manager
+  <div class="footer-copyright text-center py-3">© 2021 Ю.И. Бородин.
   </div>
   <!-- Copyright -->
 </footer>

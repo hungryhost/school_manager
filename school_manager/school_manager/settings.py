@@ -209,9 +209,11 @@ INSTALLED_APPS = [
 	'rest_framework_swagger',
 	'rest_framework_simplejwt.token_blacklist',
 	'watchman',
+	'crispy_forms',
 	'cities_light',
 	'users',
 	'main',
+	'school',
 	'timetable',
 	'django_filters',
 	'django_countries',
@@ -220,7 +222,9 @@ INSTALLED_APPS = [
 	'timezone_field',
 	'corsheaders',
 ]
-
+LOGIN_REDIRECT_URL = 'main-main'
+LOGIN_URL = 'login'
+CRISPY_TEMPLATE_PACK='bootstrap4'
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
@@ -295,7 +299,7 @@ AUTH_PASSWORD_VALIDATORS = [
 	},
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
